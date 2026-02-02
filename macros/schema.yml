@@ -1,0 +1,21 @@
+version: 2
+
+macros:
+  - name: convert_currency
+    description: >
+      Converts a monetary amount from its source currency to a target currency using exchange rates.
+      The macro assumes that exchange rate columns (e.g., `eur_to_czk`) are available in the current
+      query scope, typically by joining with a rates table.
+    arguments:
+      - name: column_name
+        type: string
+        description: The SQL expression or column name for the amount to convert.
+      - name: target_currency
+        type: string
+        description: The target currency code (e.g., 'CZK', 'EUR', 'USD', 'HUF').
+      - name: convert_from
+        type: list
+        description: A list of allowed source currency codes. Defaults to `['CZK', 'EUR', 'USD', 'HUF']`.
+      - name: currency_column
+        type: string
+        description: The column containing the source currency code. Defaults to `'currency'`.

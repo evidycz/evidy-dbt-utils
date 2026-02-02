@@ -1,0 +1,8 @@
+name: "evidy_dbt_utils"
+version: "1.0.0"
+
+macro-paths: [ "macros" ]
+
+clean-targets: # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
