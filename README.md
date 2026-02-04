@@ -9,7 +9,7 @@ To use this package in your dbt project, add the following to your `packages.yml
 ```yaml
 packages:
   - git: "https://github.com/evidycz/evidy-dbt-utils.git"
-    revision: 1.0.0 # Match the version in dbt_project.yml
+    revision: 1.1.0 # Match the version in dbt_project.yml
 ```
 
 Then run `dbt deps` to install the package.
@@ -33,6 +33,13 @@ The rates table (e.g., `rates`) must have a specific structure to work with this
 - `date_day`: A date column used for joining.
 - `[source_currency]_to_[target_currency]`: Columns for each exchange rate (e.g., `eur_to_czk`, `usd_to_czk`).
 
+### `clean_url_domain` ([source](macros/clean_url.sql))
+
+Cleans a raw URL column to extract the root domain. It removes protocols (`http://`, `https://`), common subdomains (`www.`, `m.`), and everything after the domain (paths, query parameters).
+
+**Parameters:**
+- `column_name` (required): The SQL expression or column name containing the URL string.
+
 ## Example Usage
 
 ### `convert_currency`
@@ -53,3 +60,12 @@ left join {{ ref('rates') }} as r
 ```
 
 In this example, the `rates` model is expected to have a `date_day` column and exchange rate columns like `czk_to_eur`, `usd_to_eur`, etc., depending on the source currencies present in your data.
+
+### `clean_url_domain`
+
+```sql
+select
+    original_url,
+    {{ evidy_dbt_utils.clean_url_domain('original_url') }} as cleaned_domain
+from {{ ref('stg_web_traffic') }}
+```
