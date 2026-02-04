@@ -19,3 +19,12 @@ macros:
       - name: currency_column
         type: string
         description: The column containing the source currency code. Defaults to `'currency'`.
+
+  - name: clean_url_domain
+    description: >
+      Cleans a raw URL column to extract the root domain by removing protocols, 
+      subdomains (like www. or m.), and paths/query parameters.
+    arguments:
+      - name: column_name
+        type: string
+        description: The SQL column or expression containing the URL string.
